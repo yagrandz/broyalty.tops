@@ -1,0 +1,29 @@
+
+#top_table {
+    font-size: .8em;
+}
+
+.column-title{
+	position:relative;
+	display:inline-block;
+	margin:0 auto;
+}
+
+.column-icon{
+	width: 25px;
+}
+
+.column-icon-mod{
+	position:absolute;
+	z-index:1;
+	top:1px;
+	left:1px;
+	width: 13px;
+}
+
+.column-title .badge{
+	font-size: 6px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
