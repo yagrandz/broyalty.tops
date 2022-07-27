@@ -15,6 +15,9 @@
  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.11.5/r-2.2.9/datatables.min.css"/>
  
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.11.5/r-2.2.9/datatables.min.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 
   <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >
@@ -44,6 +47,11 @@ On the basis of this information, an analysis of the speed of scoring points and
 Food costs are calculated from the prices of the 8th level of the throne room.<br/>
 </div>
 <table id="top_table" class="table table-striped table-sm" width="100%"></table>
+<h2>History</h2>
+<div class="d-grid gap-2">
+<div class="btn btn-primary btn-block chart_init_btn" data-id="points">Build a graph</div>
+</div>
+<div style="display:none;" class="chart" id="top_points_chart"></div>
 <hr/>
 <div class="text-center">
 <div class="text-muted">Created by </div>
