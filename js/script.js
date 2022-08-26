@@ -1,19 +1,63 @@
 class Top {
 	constructor(u){
-		$.getScript( u )
-		  .done(this.onDataLoad.bind(this))
+		this.u = u;
+		this.season_id = 0;
+		this.season_selector = $('#top_season_selector');
+		var matches = window.location.search.match(/season=(\d+)/);
+		if(matches&&parseInt(matches[1])>0){
+			this.season_id = parseInt(matches[1]);
+		}
+		$.getScript(  this.u.replace('#season_id#', 'seasons_list') )
+		  .done(this.onSeasonsLoad.bind(this))
 		  .fail(function( jqxhr, settings, exception ) {
 			alert('Data load Error');
 		});
 		$('.chart_init_btn').click(this.onChatInitBtnClick.bind(this));
 	}
 	
+	onSeasonsLoad(){
+		this.showSeasonSelector();
+	}
+	
+	onSeasonSelectorChanged(){
+		this.season_id = this.season_selector.val();
+		$.getScript( this.u.replace('#season_id#', this.season_id) )
+		  .done(this.onDataLoad.bind(this))
+		  .fail(function( jqxhr, settings, exception ) {
+			alert('Data load Error');
+		});
+	}
+	
 	onDataLoad(){
+		$('.chart_init_btn').show();
+		var chart = $('#top_'+$('.chart_init_btn').data('id')+'_chart');
+		var chart_clone = chart.clone();
+		chart.remove();
+		chart_clone.html('');
+		chart_clone.hide();
+		$('#top_'+$('.chart_init_btn').data('id')+'_chart_container').append(chart_clone);
 		this.createTable();
 	}
 	
+	showSeasonSelector(){
+		this.season_selector.html('');
+		seasons_list.forEach(s=>{
+			this.season_selector.append('<option value="'+s+'">'+s+' season</option>');
+		});
+		if(!seasons_list.indexOf(this.season_id)>-1){
+			this.season_id = seasons_list[seasons_list.length-1];
+		}
+		this.season_selector.val(this.season_id);
+		this.season_selector.parent().show();
+		this.season_selector.change(this.onSeasonSelectorChanged.bind(this));
+		this.season_selector.change();
+	}
+	
 	createTable(){
-		$('#top_table').DataTable( {
+		if(this.table){
+			this.table.destroy();
+		}
+		this.table = $('#top_table').DataTable( {
 			responsive: true,
 			data: table_data,
 			columns: table_header,
